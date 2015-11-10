@@ -29,8 +29,8 @@ var tttapi = {
     });
   },
 
-
   register: function register(credentials, callback) {
+    debugger;
     this.ajax({
       method: 'POST',
       url: this.ttt + '/register',
@@ -38,11 +38,11 @@ var tttapi = {
       data: JSON.stringify(credentials),
       dataType: 'json',
     }, callback);
-    window.location = "index.html";
+    $('#registerDiv').css("display", "none");
+    $('#loginDiv').css("display", "block");
   },
 
   login: function login(credentials, callback) {
-    debugger;
     this.ajax({
       method: 'POST',
       url: this.ttt + '/login',
@@ -50,7 +50,9 @@ var tttapi = {
       data: JSON.stringify(credentials),
       dataType: 'json',
     }, callback);
-    // window.location = "activity_form.html";
+    $('#loginDiv').css("display", "none");
+    $('#propertiesDiv').css("display", "block");
+    $('.listBooks').css("display", "block");
   },
 
 listBooks: function (token, callback) {
@@ -106,7 +108,6 @@ listBooks: function (token, callback) {
 $(document).ready(function() {
 $(function() {
   var form2object = function(form) {
-    debugger;
     var data = {};
     $(form).children().each(function(index, element) {
       var type = $(this).attr('type');
@@ -133,41 +134,28 @@ $(function() {
     $('#result').val(JSON.stringify(data, null, 4));
   };
 
+  // If user has not registered this register checkbox will be clicked
   $('.checkbox').on('click', function(e){
-    console.log('click on register button is working');
-    window.location = "register.html";
-    // var pwconfirm = document.getElementsByClassName("confirm");
-    // pwconfirm.style.display = 'block';
+    $('#registerDiv').css("display", "block");
+    $('#loginDiv').css("display", "none");
+    });  // end of register checkbox processing
 
-    // pwconfirm.style.display = "";
-    console.log(pwconfirm);
-      });
-
-  // var unhide = function unhide (it, box) {
-  //     console.log('getting to unhide function');
-  //     debugger;
-  //     var check = (box.checked) ? "block" : "none";
-  //     document.getElementById(it).style.display = check;
-  //   };
-
-
+  // Register button processing
   $('.register').on('submit', function(e) {
     var credentials = wrap('credentials', form2object(this));
     tttapi.register(credentials, callback);
     e.preventDefault();
-  });
+  });  // end of register button processing
 
   $('.login').on('submit', function(e) {
-    debugger;
     var credentials = wrap('credentials', form2object(this));
     var cb = function cb(error, data) {
       if (error) {
         callback(error);
         return;
       }
-      callback(null, data);
-      //$('.token').val(data.user.token); // sets all forms a token value
       token = data.user.token;
+      callback(null, data);
       console.log(token);
     };
     e.preventDefault();

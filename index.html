@@ -8,31 +8,70 @@
 
 <body>
 
-<div id="main">
-  <h1>Community Activity</h1>
+<!-- <div id="main"> -->
+  <!-- <h1>Community Activity</h1>
   <h3>Welcome to your home's Community Activity web site.  Check out the
   all the great activities scheduled for your home and residents.
 
 
   To get started please register or login (if you already registered) below.
-  </h3>
-      <form class="login">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input name="email" id="inputEmail" class="form-control" type="text" placeholder="Email address" required autofocus>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="password">
-       <input name="password_confirmation" type="password" id="confirm" style="display:none" placeholder="pw confirmation">
+  </h3> -->
 
-        <div class="checkbox">
-          <label>
+  <div id="loginDiv">
+    <form class="login">
+      <h2 class="form-signin-heading">Please sign in</h2>
+      <input name="email" id="inputEmail" class="form-control" type="text"      placeholder="Email address" required autofocus>
+      <input type="password" name="password" id="inputPassword" class="form-control" placeholder="password">
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="register-now"> Register now
+        </label>
+      </div>
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+    </form>
+  </div>    <!-- end of loginDiv -->
+
+  <div id="registerDiv">
+    <form class="register">
+      <h2 class="form-signin-heading">Please register</h2>
+      <input name="email" id="inputEmail" class="form-control" type="text" placeholder="Email address" required autofocus>
+      <!-- <input type="password" name="password" id="inputPassword" class="form-control" placeholder="password"> -->
+      <input type="password" name="password" class="form-control" placeholder="password">
+      <input name="password_confirmation" type="password" class="form-control" placeholder="pw confirmation">
+
+        <!-- <div class="checkbox">
+         <label> -->
             <!--<input type="checkbox" value="remember-me"> Remember me> ORIGINAL CODE -->
-            <input type="checkbox" value="register-now"> Register now
+          <!--   <input type="checkbox" value="register-now"> Register now
           </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
-      <label for="result">Result</label>
-      <textarea id="result"></textarea>
-</div>
+        </div> -->
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Register now</button>
+    </form>
+  </div>
+
+<div id="propertiesDiv">
+    <form class="properties">
+      <h2 class="form-signin-heading">Welcome to the Properties page</h2>
+      <p> Here you can look at all properties, a single or update a property.</p>
+      <ul>
+        <li>Show all the properties</li>
+        <li>Show a single property</li>
+        <li>Update a property</li>
+        <li>Create a property</li>
+      </ul>
+
+    </form>
+  </div>  <!-- end of properties div-->
+
+  <form class="listBooks">
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Show all books</button>
+  </form>
+    <label for="result">Result</label>
+    <textarea id="result"></textarea>
+<!-- </div> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="app/app.js" type="application/javascript" charset="utf-8"></script>
 </body>
