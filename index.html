@@ -66,8 +66,35 @@
     </form>
   </div>  <!-- end of properties div-->
 
+
+
+<div id="activityFormDiv">
+    <form class="addActivity">
+      <h2 class="form-signin-heading">Enter new activity info below</h2>
+      <input type="text" class="form-control" id="actname" placeholder="Activity Name">
+      <input type="text" class="form-control" id="serviceprovider" placeholder="Activity Service Provider">
+      <input type="text" class="form-control" id="astreetNo" placeholder="Street Number">
+      <input type="text" class="form-control" id="astreet"  placeholder="Street Name">
+      <input type="text" class="form-control" id="acity" placeholder="City">
+      <input type="text" class="form-control" id="astate" placeholder="State">
+      <input type="text" class="form-control" id="azipcode" placeholder="Zip code">
+      <input type="text" class="form-control" id="dateofactivity" placeholder="Date of activity">
+      <input type="text" class="form-control" id="timeofactivity" placeholder="Time of Activity">
+      <input type="text" class="form-control" id="length" placeholder="Length of Activity">
+      <input type="text" class="form-control" id="participants" placeholder="Participant">
+      <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+    </form>
+  </div>
+
   <form class="listProperties">
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Show all properties</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Show all properties</button>
+  </form>
+
+  <form class="listOneProperty">
+    <label for="prop-id">Id:</label>
+    <input id="prop-id" type="text" size="4">
+    <!-- <input name="list-property" type="submit" value="Show Property"> -->
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Show a single properties</button>
   </form>
 
   <div id="propertyFormDiv">
