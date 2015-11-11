@@ -136,6 +136,7 @@ $(function() {
       };
       callback(null, data);
       token = data.user.token;
+      userId = data.user.id;
     };
     e.preventDefault();
     tttapi.login(credentials, cb);
