@@ -52,7 +52,7 @@
     </form>
   </div>
 
-<div id="propertiesDiv">
+  <div id="propertiesDiv">
     <form class="properties">
       <h2 class="form-signin-heading">Welcome to the Properties page</h2>
       <p> Here you can look at all properties, a single or update a property.</p>
@@ -66,9 +66,62 @@
     </form>
   </div>  <!-- end of properties div-->
 
-  <form class="listBooks">
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Show all books</button>
+  <form class="listProperties">
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Show all properties</button>
   </form>
+
+  <div id="propertyFormDiv">
+    <form class="addProperty">
+      <h2 class="form-signin-heading">Enter new property info below</h2>
+      <input type="text" class="form-control" id="streetNo" placeholder="Street Number">
+      <input type="text" class="form-control" id="street"  placeholder="Street">
+      <input type="text" class="form-control" id="city" placeholder="City">
+      <input type="text" class="form-control" id="state" placeholder="State">
+      <input type="text" class="form-control" id="zipcode" placeholder="Zip code">
+      <input type="text" class="form-control" id="propertyMgmtCo" placeholder="Property Mgmt Company">
+      <input type="text" class="form-control" id="manager" placeholder="House Manager">
+      <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+    </form>
+  </div>
+
+  <!-- <div id="propertyFormDiv">
+    <form class="form-inline">
+      <div class="form-group">
+        <label class="sr-only" for="streetNo">Street No</label>
+        <input type="text" class="form-control" id="streetNo" placeholder="Street Number">
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="street">Street</label>
+        <input type="text" class="form-control" id="street" placeholder="Street">
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="city">City</label>
+        <input type="text" class="form-control" id="city" placeholder="City">
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="state">State</label>
+        <input type="text" class="form-control" id="state" placeholder="State">
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="street">Zip Code</label>
+        <input type="text" class="form-control" id="zip code" placeholder="Zip code">
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="propMgmtCo">Property Mgmt Co</label>
+        <input type="text" class="form-control" id="propertyMgmtCo" placeholder="Property Mgmt Company">
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="houseMgr">House Manager</label>
+        <input type="text" class="form-control" id="house manager" placeholder="House Manager">
+      </div>
+    <button type="submit" class="addProperty">Submit</button>
+  </form>
+
+    <!-- <span class="input-group-addon" id="sizing-addon3">@</span>
+    <input type="text" class="form-control" placeholder="Street Number" aria-describedby="sizing-addon3">
+    <button class="addProperty" type="click">Create a Property</button>
+  </div> -->
+
     <label for="result">Result</label>
     <textarea id="result"></textarea>
 <!-- </div> -->

@@ -11,6 +11,11 @@
   display: none;
 }
 
+#propertyFormDiv {
+  display: none;
+}
+
+
 .login {
   max-width: 330px;
   padding: 15px;
@@ -29,10 +34,15 @@
   margin: 0 auto;
 }
 
-.listBooks {
+.listProperties {
   display: none;
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
 }
 
+.addProperty {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}

@@ -9,10 +9,13 @@ var loginURL = 'http://localhost:3000/login';
 // var booksURL = 'http://ttt.wdibos.com/books';
 var booksURL = 'http://localhost:3000/books';  // will be used for create & list books
 // var showAllGamesURL = 'http://ttt.wdibos.com/games';
+var propertiesURL = 'http://localhost:3000/properties';  // will be used for create & list properties
+// var showAllGamesURL = 'http://ttt.wdibos.com/games';
 var userEmail = "";
 var token = "";
 var userId = 0;
 var gameId = 0;
+var dataReturned ={};
 
 var tttapi = {
   gameWatcher: null,
@@ -30,7 +33,6 @@ var tttapi = {
   },
 
   register: function register(credentials, callback) {
-    debugger;
     this.ajax({
       method: 'POST',
       url: this.ttt + '/register',
@@ -52,13 +54,14 @@ var tttapi = {
     }, callback);
     $('#loginDiv').css("display", "none");
     $('#propertiesDiv').css("display", "block");
-    $('.listBooks').css("display", "block");
+    $('.listProperties').css("display", "block");
+    $('#propertyFormDiv').css("display", "block");
   },
 
-listBooks: function (token, callback) {
+listProperties: function (token, callback) {
     this.ajax({
       method: 'GET',
-      url: this.ttt + '/books',
+      url: this.ttt + '/properties',
       headers: {
         Authorization: 'Token token=' + token
       },
@@ -66,44 +69,22 @@ listBooks: function (token, callback) {
     }, callback);
   },
 
-  addBook: function (token, callback) {
+  addProperty: function (formdata, token, callback) {
     debugger;
+    console.log('got to add property function');
+    console.log(formdata);
     this.ajax({
       method: 'POST',
-      url: this.ttt + '/books',
+      url: this.ttt + '/properties',
       headers: {
         Authorization: 'Token token=' + token
       },
-      dataType: 'json'
-    }, callback);
-  },
-
-  showGame: function (id, token, callback) {
-    this.ajax({
-      method: 'GET',
-      url: this.ttt + '/games/'+id,
-      headers: {
-        Authorization: 'Token token=' + token
-      },
-      dataType: 'json'
-    }, callback);
-  },
-
-
-  markCell: function (id, data, token, callback) {
-    this.ajax({
-      method: 'PATCH',
-      url: this.ttt + '/games/' + id,
-      headers: {
-        Authorization: 'Token token=' + token
-      },
-      contentType: 'application/json; charset=utf-8',
-      data: JSON.stringify(data),
+      contentType : 'application/json',
+      data: JSON.stringify(formdata),
       dataType: 'json'
     }, callback);
   },
 };
-
 
 $(document).ready(function() {
 $(function() {
@@ -115,7 +96,6 @@ $(function() {
         data[$(this).attr('name')] = $(this).val();
       }
     });
-    console.log(data);
     return data;
   };
 
@@ -131,7 +111,7 @@ $(function() {
       $('#result').val('status: ' + error.status + ', error: ' +error.error);
       return;
     }
-    $('#result').val(JSON.stringify(data, null, 4));
+    dataReturned = $('#result').val(JSON.stringify(data, null, 4));
   };
 
   // If user has not registered this register checkbox will be clicked
@@ -153,29 +133,50 @@ $(function() {
       if (error) {
         callback(error);
         return;
-      }
-      token = data.user.token;
+      };
       callback(null, data);
-      console.log(token);
+      token = data.user.token;
     };
     e.preventDefault();
     tttapi.login(credentials, cb);
   });
 
-  $('.listBooks').on('submit', function(e) {
-    console.log('got to list books function', token);
-    debugger;
+  $('.listProperties').on('submit', function(e) {
+    console.log('got to list properties function', token);
 //    var token = $(this).children('[name="token"]').val();
     e.preventDefault();
-    tttapi.listBooks(token, callback);
+    tttapi.listProperties(token, callback);
   });
 
-  $('.add-book').on('submit', function(e) {
+  $('.addProperty').on('submit', function(e) {
     debugger;
-    console.log('got to add book function', token);
-//    var token = $(this).children('[name="token"]').val();
+
+    var dataForServer = {
+      property : {
+        "no":"",
+        "street":"",
+        "city":"",
+        "state":"",
+        "zip":"",
+        "house_mgmt_co":"",
+        "manager":"",
+        "user_id":0
+      // }
+   }
+  };
+
+    dataForServer.property.no = $(".addProperty input[id=streetNo]").val();
+    dataForServer.property.street = $(".addProperty input[id=street]").val();
+    dataForServer.property.city = $(".addProperty input[id=city]").val();
+    dataForServer.property.state = $(".addProperty input[id=state]").val();
+    dataForServer.property.zip = $(".addProperty input[id=zipcode]").val();
+    dataForServer.property.house_mgmt_co = $(".addProperty input[id=propertyMgmtCo]").val();
+    dataForServer.property.manager = $(".addProperty input[id=manager]").val();
+    dataForServer.property.user_id = 3;
+
+    console.log('got to add property function', dataForServer);
     e.preventDefault();
-    tttapi.addBook(token, callback);
+    tttapi.addProperty(dataForServer, token, callback);
   });
 
 
