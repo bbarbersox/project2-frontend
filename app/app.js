@@ -11,25 +11,25 @@ var booksURL = 'http://localhost:3000/books';  // will be used for create & list
 // var showAllGamesURL = 'http://ttt.wdibos.com/games';
 var propertiesURL = 'http://localhost:3000/properties';  // will be used for create & list properties
 // var showAllGamesURL = 'http://ttt.wdibos.com/games';
+
 var userEmail = "";
 var token = "";
 var userId = 0;
-var gameId = 0;
+var listFlag = "";
 var dataReturned ={};
 
 var tttapi = {
-  gameWatcher: null,
   ttt: 'http://localhost:3000',
 //   ttt: 'http://ttt.wdibos.com',
 
-  ajax: function(config, cb) {
-    console.log('got to ajax done routine');
-    console.log(config);
-    $.ajax(config).done(function(data, textStatus, jqxhr) {
-      cb(null, data);
-    }).fail(function(jqxhr, status, error) {
-      cb({jqxher: jqxhr, status: status, error: error});
-    });
+ajax: function(config, cb) {
+  console.log('got to ajax done routine');
+  console.log(config);
+  $.ajax(config).done(function(data, textStatus, jqxhr) {
+    cb(null, data);
+  }).fail(function(jqxhr, status, error) {
+    cb({jqxher: jqxhr, status: status, error: error});
+  });
   },
 
   register: function register(credentials, callback) {
@@ -68,7 +68,23 @@ listActivities: function (token, callback) {
       },
       dataType: 'json'
     }, callback);
+    // console.log(dataReturned);
+    // dataReturned = $.parseJSON(dataReturned);
+    // console.log(dataReturned);
+    // add code here to parse the JSON, map it to an
+    //array and append it to a table/list
   },
+
+// showActivitesResult: function( resultData ) {
+//   console.log('got to activity result processing', resultData);
+//   if (listFlag = "activity") {
+//     //resultData.forEach(function(entry) {
+//     console.log(entry);
+//     // $.each(resultData, function(i, item) {
+//     // $('<tr>').html(
+//     //     "<td>" + resultData[i].rank + "</td><td>" + resultData[i].content + "</td><td>" + resultData[i].UID + "</td>").appendTo('.activtyTable');
+//   };
+// },
 
 listOneActivity: function (id, token, callback) {
     this.ajax({
@@ -80,6 +96,19 @@ listOneActivity: function (id, token, callback) {
       dataType: 'json'
     }, callback);
   },
+
+// updateActivity: function (id, data, token, callback) {
+//   this.ajax({
+//     method: 'PATCH',
+//     url: this.ttt + '/activities/' + id, // id is the activity id
+//     headers: {
+//       Authorization: 'Token token=' + token
+//     },
+//     contentType: 'application/json; charset=utf-8',
+//     data: JSON.stringify(data),
+//     dataType: 'json'
+//   }, callback);
+// },
 
   addActivity: function (formdata, token, callback) {
     console.log(formdata);
@@ -96,15 +125,15 @@ listOneActivity: function (id, token, callback) {
   },
 
 
-//   deleteActivity: function (formdata, token, callback) {
-//     console.log(formdata);
-//    this.ajax({
-//     url: this.ttt + '/activities/'+id,
-//     type: 'DELETE',
-//     success: function(result) {
-//         // Do something with the result
-//     }
-// });
+  // deleteActivity: function (formdata, token, callback) {
+  //   console.log(formdata);
+  //   this.ajax({
+  //   url: this.ttt + '/activities/'+id,
+  //   type: 'DELETE',
+  //   success: function(result) {
+  //       // Do something with the result
+  //   }
+  // });
 
   listProperties: function (token, callback) {
     this.ajax({
@@ -147,8 +176,8 @@ listOneActivity: function (id, token, callback) {
 };
 
 $(document).ready(function() {
-$(function() {
-  var form2object = function(form) {
+  $(function() {
+    var form2object = function(form) {
     var data = {};
     $(form).children().each(function(index, element) {
       var type = $(this).attr('type');
@@ -157,37 +186,62 @@ $(function() {
       }
     });
     return data;
-  };
+    };
 
-  var wrap = function wrap(root, formData) {
+    var wrap = function wrap(root, formData) {
     var wrapper = {};
     wrapper[root] = formData;
     return wrapper;
-  };
+    };
 
-  var callback = function callback(error, data) {
+    var callback = function callback(error, data) {
     if (error) {
       console.error(error);
       $('#result').val('status: ' + error.status + ', error: ' +error.error);
       return;
     }
-    dataReturned = $('#result').val(JSON.stringify(data, null, 4));
+    debugger;
+
+    // dataReturned = $.val(JSON.stringify(data, null, 4))
+    $('#result').val(JSON.stringify(data, null, 4));
+    dataReturned = data;
+    console.log(data);
+    console.log(dataReturned);
+    // tttapi.showActivitesResult(dataReturned);
+    };
+
+
+    var propertyList = Handlebars.compile($('#properties-list').html());
+
+    var tableCB = function callback(error, data) {
+    if (error) {
+      console.error(error);
+      $('#result').val('status: ' + error.status + ', error: ' +error.error);
+      return;
+    }
+    $('#result').val(JSON.stringify(data, null, 4));
+    var newHTML = propertyList({properties: data.properties});
+    $('#allProperties').html(newHTML);
   };
 
-  // If user has not registered this register checkbox will be clicked
-  $('.checkbox').on('click', function(e){
+
+
+
+
+    // If user has not registered this register checkbox will be clicked
+    $('.checkbox').on('click', function(e){
     $('#registerDiv').css("display", "block");
     $('#loginDiv').css("display", "none");
     });  // end of register checkbox processing
 
-  // Register button processing
-  $('.register').on('submit', function(e) {
+    // Register button processing
+    $('.register').on('submit', function(e) {
     var credentials = wrap('credentials', form2object(this));
     tttapi.register(credentials, callback);
     e.preventDefault();
-  });  // end of register button processing
+    });  // end of register button processing
 
-  $('.login').on('submit', function(e) {
+    $('.login').on('submit', function(e) {
     var credentials = wrap('credentials', form2object(this));
     var cb = function cb(error, data) {
       if (error) {
@@ -200,22 +254,30 @@ $(function() {
     };
     e.preventDefault();
     tttapi.login(credentials, cb);
-  });
+    });
 
-  $('.listActivities').on('submit', function(e) {
-    console.log('got to list actvities function', token);
+    $('.listActivities').on('submit', function(e) {
     e.preventDefault();
+    listFlag = "activity";
     tttapi.listActivities(token, callback);
-  });
+    });
 
-  $('.listOneActivity').on('submit', function(e) {
+    $('.listOneActivity').on('submit', function(e) {
     console.log('got to list one activity function', token);
     var id = $(".listOneActivity input[id=act-id]").val();
     e.preventDefault();
     tttapi.listOneActivity(id, token, callback);
-  });
+    });
 
-  $('.addActivity').on('submit', function(e) {
+    // $('.updateActivity').on('submit', function(e) {
+    //   var token = $(this).children('[name="token"]').val();
+    //   var id = $('#mark-id').val();
+    //   var data = wrap('game', wrap('cell', form2object(this)));
+    //   e.preventDefault();
+    //   tttapi.markCell(id, data, token, callback);
+    // });
+
+    $('.addActivity').on('submit', function(e) {
     debugger;
 
     var dataForServer = {
@@ -233,7 +295,7 @@ $(function() {
         "participant":"",
         "user_id":userId
    }
-  };
+    };
 
     dataForServer.activity.actname = $(".addActivity input[id=actname]").val();
     dataForServer.activity.provider = $(".addActivity input[id=serviceprovider]").val();
@@ -254,15 +316,15 @@ $(function() {
     tttapi.addActivity(dataForServer, token, callback);
   });
 
-  $('deleteActivity').on('Submit', function(e){
-    console.log('got to delete Acivity')
+    $('deleteActivity').on('Submit', function(e){
+      console.log('got to delete Acivity');
 
-  });
+    });
 
   $('.listProperties').on('submit', function(e) {
     console.log('got to list properties function', token);
     e.preventDefault();
-    tttapi.listProperties(token, callback);
+    tttapi.listProperties(token, tableCB);
   });
 
   $('.listOneProperty').on('submit', function(e) {

@@ -4,6 +4,7 @@
   <link rel="stylesheet" type="text/css" href="styles/login.css">
   <meta charset="UTF-8">
   <link href="styles/bootstrap.min.css" rel="stylesheet">
+  <script type="text/javascript" src="assets/handlebars-v3.0.3.js"></script>
 </head>
 
 <body>
@@ -189,15 +190,10 @@
     <button class="addProperty" type="click">Create a Property</button>
   </div> -->
 
-    <style type="text/css">
-    .bs-example{
-      margin: 20px;
-    }
-</style>
-</head>
+
 <body>
 <div class="bs-example">
-    <table class="table">
+    <table class="propertyTable">
         <thead>
             <tr>
                 <th>Number</th>
@@ -209,8 +205,25 @@
                 <th>Property Manager</th>
             </tr>
         </thead>
-        <tbody>
+
+        <tbody ID="allProperties">
+          <script id="properties-list" type="text/x-handlebars-template">
+          <div>
+            {{#each properties}}
             <tr>
+              <td>{{no}}</td>
+              <td>{{street}}</td>
+              <td>{{city}}</td>
+              <td>{{state}}</td>
+              <td>{{zip}}</td>
+              <td>{{house_mgmt_co}}</td>
+              <td>{{manager}}</td>
+            </tr>
+             {{/each}}
+            </div>
+          </script>
+        </tbody>
+            <!-- <tr>
                 <td>1</td>
                 <td>John</td>
                 <td>Carter</td>
@@ -228,7 +241,7 @@
                 <td>Rambo</td>
                 <td>johnrambo@mail.com</td>
             </tr>
-        </tbody>
+        </tbody> -->
     </table>
 </div>
 
