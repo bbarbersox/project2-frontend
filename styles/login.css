@@ -19,6 +19,12 @@
   display: none;
 }
 
+#result {
+  height: 60ex;
+  width: 90%;
+  margin: 0 auto;
+}
+
 .login {
   max-width: 330px;
   padding: 15px;
@@ -89,3 +95,5 @@
   padding: 15px;
   margin: 0 auto;
 }
+
+

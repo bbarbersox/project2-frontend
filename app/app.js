@@ -82,8 +82,6 @@ listOneActivity: function (id, token, callback) {
   },
 
   addActivity: function (formdata, token, callback) {
-    debugger;
-    console.log('got to add property function');
     console.log(formdata);
     this.ajax({
       method: 'POST',
@@ -96,6 +94,17 @@ listOneActivity: function (id, token, callback) {
       dataType: 'json'
     }, callback);
   },
+
+
+//   deleteActivity: function (formdata, token, callback) {
+//     console.log(formdata);
+//    this.ajax({
+//     url: this.ttt + '/activities/'+id,
+//     type: 'DELETE',
+//     success: function(result) {
+//         // Do something with the result
+//     }
+// });
 
   listProperties: function (token, callback) {
     this.ajax({
@@ -229,7 +238,6 @@ $(function() {
     dataForServer.activity.actname = $(".addActivity input[id=actname]").val();
     dataForServer.activity.provider = $(".addActivity input[id=serviceprovider]").val();
 
-
     dataForServer.activity.prono = $(".addActivity input[id=astreetNo]").val();
     dataForServer.activity.prostreet = $(".addActivity input[id=astreet]").val();
     dataForServer.activity.procity = $(".addActivity input[id=acity]").val();
@@ -241,12 +249,14 @@ $(function() {
     dataForServer.activity.participant = $(".addActivity input[id=participants]").val();
     dataForServer.activity.user_id = userId;
 
-
-  // dataForServer.activity.user_id = 3;
-
     console.log('got to add activity function', dataForServer);
     e.preventDefault();
     tttapi.addActivity(dataForServer, token, callback);
+  });
+
+  $('deleteActivity').on('Submit', function(e){
+    console.log('got to delete Acivity')
+
   });
 
   $('.listProperties').on('submit', function(e) {
