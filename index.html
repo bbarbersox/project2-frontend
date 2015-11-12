@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" type="text/css" href="styles/login.css">
-
-<link href="styles/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <link href="styles/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -13,9 +13,10 @@
   <h3>Welcome to your home's Community Activity web site.  Check out the
   all the great activities scheduled for your home and residents.
 
-
   To get started please register or login (if you already registered) below.
   </h3> -->
+
+  <!-- Navbar ends -->
 
   <div id="loginDiv">
     <form class="login">
@@ -57,7 +58,7 @@
       <h2 class="form-signin-heading">Welcome to the Properties page</h2>
       <p> Here you can look at all properties, a single or update a property.</p>
       <ul>
-        <li>Show all the properties</li>
+        <li class="listProperties" <a href="#">>Show all the properties</li>
         <li>Show a single property</li>
         <li>Update a property</li>
         <li>Create a property</li>
@@ -106,6 +107,26 @@
     <button class="btn btn-lg btn-primary btn-block" type="submit">Show a single activity</button>
   </form>
 
+  <form class="updateActivity">
+    <label for="act-id">Id:</label>
+    <input id="act-id" type="text" size="4">
+    <!-- <input name="list-property" type="submit" value="Show Property"> -->
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Update an activity</button>
+  </form>
+
+  <div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Dropdown
+    <span class="caret"></span>
+  </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li><a href="#">Action</a></li>
+      <li><a href="#">Another action</a></li>
+      <li><a href="#">Something else here</a></li>
+      <li><a href="#">Separated link</a></li>
+    </ul>
+  </div>
+
   <form class="listActivities">
     <button class="btn btn-lg btn-primary btn-block" type="submit">Show all activities</button>
   </form>
@@ -127,6 +148,8 @@
       <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
     </form>
   </div>
+
+
 
   <!-- <div id="propertyFormDiv">
     <form class="form-inline">
@@ -165,6 +188,49 @@
     <input type="text" class="form-control" placeholder="Street Number" aria-describedby="sizing-addon3">
     <button class="addProperty" type="click">Create a Property</button>
   </div> -->
+
+    <style type="text/css">
+    .bs-example{
+      margin: 20px;
+    }
+</style>
+</head>
+<body>
+<div class="bs-example">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip Code</th>
+                <th>Property Mgmt Co</th>
+                <th>Property Manager</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>John</td>
+                <td>Carter</td>
+                <td>johncarter@mail.com</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Peter</td>
+                <td>Parker</td>
+                <td>peterparker@mail.com</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>John</td>
+                <td>Rambo</td>
+                <td>johnrambo@mail.com</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
     <label for="result">Result</label>
     <textarea id="result"></textarea>

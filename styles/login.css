@@ -50,14 +50,14 @@
 }
 
 .listOneActivity {
-  display: block;
+  display: none;
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
 }
 
 .deleteActivity {
-  display: block;
+  display: none;
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
@@ -71,7 +71,7 @@
 }
 
 .listOneProperty {
-  display: block;
+  display: none;
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
@@ -90,7 +90,7 @@
 }
 
 .deleteProperty {
-  display: block;
+  display: none;
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
