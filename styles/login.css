@@ -43,6 +43,20 @@
   margin: 0 auto;
 }
 
+.listOneActivity {
+  display: block;
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.deleteActivity {
+  display: block;
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
 .listProperties {
   display: none;
   max-width: 330px;
@@ -64,6 +78,13 @@
 }
 
 .addActivity {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.deleteProperty {
+  display: block;
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;

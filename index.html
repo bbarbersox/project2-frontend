@@ -50,7 +50,7 @@
         </div> -->
       <button class="btn btn-lg btn-primary btn-block" type="submit">Register now</button>
     </form>
-  </div>
+  </div>    <!-- end of registerDiv -->
 
   <div id="propertiesDiv">
     <form class="properties">
@@ -64,11 +64,9 @@
       </ul>
 
     </form>
-  </div>  <!-- end of properties div-->
+  </div>    <!-- end of properties div for property creation -->
 
-
-
-<div id="activityFormDiv">
+  <div id="activityFormDiv">
     <form class="addActivity">
       <h2 class="form-signin-heading">Enter new activity info below</h2>
       <input type="text" class="form-control" id="actname" placeholder="Activity Name">
@@ -84,21 +82,36 @@
       <input type="text" class="form-control" id="participants" placeholder="Participant">
       <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
     </form>
-  </div>
+  </div>    <!-- end of activityFormDiv for activity creation-->
 
   <form class="listProperties">
     <button class="btn btn-lg btn-primary btn-block" type="submit">Show all properties</button>
-  </form>
+  </form>   <!-- end of listProperties -->
 
   <form class="listOneProperty">
     <label for="prop-id">Id:</label>
     <input id="prop-id" type="text" size="4">
     <!-- <input name="list-property" type="submit" value="Show Property"> -->
     <button class="btn btn-lg btn-primary btn-block" type="submit">Show a single properties</button>
+  </form>   <!-- end of ListOneProperty -->
+
+  <form class="deleteProperty">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Delete this property</button>
+  </form>
+
+  <form class="listOneActivity">
+    <label for="act-id">Id:</label>
+    <input id="act-id" type="text" size="4">
+    <!-- <input name="list-property" type="submit" value="Show Property"> -->
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Show a single activity</button>
   </form>
 
   <form class="listActivities">
     <button class="btn btn-lg btn-primary btn-block" type="submit">Show all activities</button>
+  </form>
+
+  <form class="deleteActivity">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Delete this activity</button>
   </form>
 
   <div id="propertyFormDiv">
