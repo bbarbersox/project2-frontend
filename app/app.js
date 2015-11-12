@@ -56,6 +56,7 @@ var tttapi = {
     $('#propertiesDiv').css("display", "block");
     $('.listProperties').css("display", "block");
     $('#propertyFormDiv').css("display", "block");
+    $('#activityFormDiv').css("display", "block");
   },
 
 listActivities: function (token, callback) {
@@ -69,7 +70,34 @@ listActivities: function (token, callback) {
     }, callback);
   },
 
-listProperties: function (token, callback) {
+listOneActivity: function (id, token, callback) {
+    this.ajax({
+      method: 'GET',
+      url: this.ttt + '/activities/'+id,
+      headers: {
+        Authorization: 'Token token=' + token
+      },
+      dataType: 'json'
+    }, callback);
+  },
+
+  addActivity: function (formdata, token, callback) {
+    debugger;
+    console.log('got to add property function');
+    console.log(formdata);
+    this.ajax({
+      method: 'POST',
+      url: this.ttt + '/activities',
+      headers: {
+        Authorization: 'Token token=' + token
+      },
+      contentType : 'application/json',
+      data: JSON.stringify(formdata),
+      dataType: 'json'
+    }, callback);
+  },
+
+  listProperties: function (token, callback) {
     this.ajax({
       method: 'GET',
       url: this.ttt + '/properties',
@@ -80,7 +108,7 @@ listProperties: function (token, callback) {
     }, callback);
   },
 
-listOneProperty: function (id, token, callback) {
+  listOneProperty: function (id, token, callback) {
     this.ajax({
       method: 'GET',
       url: this.ttt + '/properties/'+id,
@@ -171,13 +199,63 @@ $(function() {
     tttapi.listActivities(token, callback);
   });
 
+  $('.listOneActivity').on('submit', function(e) {
+    console.log('got to list one activity function', token);
+    var id = $(".listOneActivity input[id=act-id]").val();
+    e.preventDefault();
+    tttapi.listOneActivity(id, token, callback);
+  });
+
+  $('.addActivity').on('submit', function(e) {
+    debugger;
+
+    var dataForServer = {
+      activity : {
+        "actname":"",
+        "provider":"",
+        "prono":"",
+        "prostreet":"",
+        "procity":"",
+        "prostate":"",
+        "zip":"",
+        "dov":"",
+        "tov":"",
+        "actlength":0,
+        "participant":"",
+        "user_id":userId
+   }
+  };
+
+    dataForServer.activity.actname = $(".addActivity input[id=actname]").val();
+    dataForServer.activity.provider = $(".addActivity input[id=serviceprovider]").val();
+
+
+    dataForServer.activity.prono = $(".addActivity input[id=astreetNo]").val();
+    dataForServer.activity.prostreet = $(".addActivity input[id=astreet]").val();
+    dataForServer.activity.procity = $(".addActivity input[id=acity]").val();
+    dataForServer.activity.prostate = $(".addActivity input[id=astate]").val();
+    dataForServer.activity.zip = $(".addActivity input[id=azipcode]").val();
+    dataForServer.activity.dov = $(".addActivity input[id=dateofactivity]").val();
+    dataForServer.activity.tov = $(".addActivity input[id=timeofactivity]").val();
+    dataForServer.activity.actlength = $(".addActivity input[id=length]").val();
+    dataForServer.activity.participant = $(".addActivity input[id=participants]").val();
+    dataForServer.activity.user_id = userId;
+
+
+  // dataForServer.activity.user_id = 3;
+
+    console.log('got to add activity function', dataForServer);
+    e.preventDefault();
+    tttapi.addActivity(dataForServer, token, callback);
+  });
+
   $('.listProperties').on('submit', function(e) {
     console.log('got to list properties function', token);
     e.preventDefault();
     tttapi.listProperties(token, callback);
   });
 
-   $('.listOneProperty').on('submit', function(e) {
+  $('.listOneProperty').on('submit', function(e) {
     console.log('got to list one property function', token);
     var id = $(".listOneProperty input[id=prop-id]").val();
     e.preventDefault();
@@ -185,8 +263,6 @@ $(function() {
   });
 
   $('.addProperty').on('submit', function(e) {
-    debugger;
-
     var dataForServer = {
       property : {
         "no":"",
@@ -197,9 +273,8 @@ $(function() {
         "house_mgmt_co":"",
         "manager":"",
         "user_id":0
-      // }
-   }
-  };
+      }
+    };
 
     dataForServer.property.no = $(".addProperty input[id=streetNo]").val();
     dataForServer.property.street = $(".addProperty input[id=street]").val();
@@ -208,7 +283,7 @@ $(function() {
     dataForServer.property.zip = $(".addProperty input[id=zipcode]").val();
     dataForServer.property.house_mgmt_co = $(".addProperty input[id=propertyMgmtCo]").val();
     dataForServer.property.manager = $(".addProperty input[id=manager]").val();
-    dataForServer.property.user_id = 3;
+    dataForServer.property.user_id = userId;
 
     console.log('got to add property function', dataForServer);
     e.preventDefault();
