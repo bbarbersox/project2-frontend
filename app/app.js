@@ -58,10 +58,32 @@ var tttapi = {
     $('#propertyFormDiv').css("display", "block");
   },
 
+listActivities: function (token, callback) {
+    this.ajax({
+      method: 'GET',
+      url: this.ttt + '/activities',
+      headers: {
+        Authorization: 'Token token=' + token
+      },
+      dataType: 'json'
+    }, callback);
+  },
+
 listProperties: function (token, callback) {
     this.ajax({
       method: 'GET',
       url: this.ttt + '/properties',
+      headers: {
+        Authorization: 'Token token=' + token
+      },
+      dataType: 'json'
+    }, callback);
+  },
+
+listOneProperty: function (id, token, callback) {
+    this.ajax({
+      method: 'GET',
+      url: this.ttt + '/properties/'+id,
       headers: {
         Authorization: 'Token token=' + token
       },
@@ -84,6 +106,7 @@ listProperties: function (token, callback) {
       dataType: 'json'
     }, callback);
   },
+
 };
 
 $(document).ready(function() {
@@ -142,11 +165,23 @@ $(function() {
     tttapi.login(credentials, cb);
   });
 
+  $('.listActivities').on('submit', function(e) {
+    console.log('got to list actvities function', token);
+    e.preventDefault();
+    tttapi.listActivities(token, callback);
+  });
+
   $('.listProperties').on('submit', function(e) {
     console.log('got to list properties function', token);
-//    var token = $(this).children('[name="token"]').val();
     e.preventDefault();
     tttapi.listProperties(token, callback);
+  });
+
+   $('.listOneProperty').on('submit', function(e) {
+    console.log('got to list one property function', token);
+    var id = $(".listOneProperty input[id=prop-id]").val();
+    e.preventDefault();
+    tttapi.listOneProperty(id, token, callback);
   });
 
   $('.addProperty').on('submit', function(e) {
