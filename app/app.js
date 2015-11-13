@@ -3,13 +3,13 @@
 // Global variable definitions
 
 // var registerURL = 'http://ttt.wdibos.com/users';
-var registerURL = 'http://localhost:3000/register';
+var registerURL = 'https://glacial-taiga-1244.herokuapp.com/register';
 // var loginURL = 'http://ttt.wdibos.com/login';
-var loginURL = 'http://localhost:3000/login';
+var loginURL = 'https://glacial-taiga-1244.herokuapp.com/login';
 // var booksURL = 'http://ttt.wdibos.com/books';
-var booksURL = 'http://localhost:3000/books';  // will be used for create & list books
+//var booksURL = 'http://localhost:3000/books';  // will be used for create & list books
 // var showAllGamesURL = 'http://ttt.wdibos.com/games';
-var propertiesURL = 'http://localhost:3000/properties';  // will be used for create & list properties
+var propertiesURL = 'https://glacial-taiga-1244.herokuapp.com/properties';  // will be used for create & list properties
 // var showAllGamesURL = 'http://ttt.wdibos.com/games';
 
 var userEmail = "";
@@ -20,7 +20,7 @@ var dataReturned ={};
 var propId = 0;
 
 var tttapi = {
-  ttt: 'http://localhost:3000',
+  ttt: 'https://glacial-taiga-1244.herokuapp.com/',
 //   ttt: 'http://ttt.wdibos.com',
 
 ajax: function(config, cb) {
