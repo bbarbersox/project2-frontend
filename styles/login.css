@@ -25,6 +25,13 @@
   margin: 0 auto;
 }
 
+.status {
+  max-height: 40px;
+  max-width: 40px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
 .login {
   max-width: 330px;
   padding: 15px;
@@ -56,7 +63,7 @@
   margin: 0 auto;
 }
 
-.updateActivity {
+#updateActivity {
   display: block;
   max-width: 330px;
   padding: 15px;

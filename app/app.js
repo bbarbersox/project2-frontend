@@ -17,6 +17,7 @@ var token = "";
 var userId = 0;
 var listFlag = "";
 var dataReturned ={};
+var propId = 0;
 
 var tttapi = {
   ttt: 'http://localhost:3000',
@@ -55,8 +56,11 @@ ajax: function(config, cb) {
     $('#loginDiv').css("display", "none");
     $('#propertiesDiv').css("display", "block");
     $('.listProperties').css("display", "block");
+    $('.listOneProperty').css("display", "block");
     $('#propertyFormDiv').css("display", "block");
     $('#activityFormDiv').css("display", "block");
+    $('.listOneActivity').css("display", "block");
+    $('.listActivities').css("display", "block");
   },
 
 listActivities: function (token, callback) {
@@ -68,11 +72,6 @@ listActivities: function (token, callback) {
       },
       dataType: 'json'
     }, callback);
-    // console.log(dataReturned);
-    // dataReturned = $.parseJSON(dataReturned);
-    // console.log(dataReturned);
-    // add code here to parse the JSON, map it to an
-    //array and append it to a table/list
   },
 
 // showActivitesResult: function( resultData ) {
@@ -97,18 +96,19 @@ listOneActivity: function (id, token, callback) {
     }, callback);
   },
 
-// updateActivity: function (id, data, token, callback) {
-//   this.ajax({
-//     method: 'PATCH',
-//     url: this.ttt + '/activities/' + id, // id is the activity id
-//     headers: {
-//       Authorization: 'Token token=' + token
-//     },
-//     contentType: 'application/json; charset=utf-8',
-//     data: JSON.stringify(data),
-//     dataType: 'json'
-//   }, callback);
-// },
+updateActivity: function (id, data, token, callback) {
+   debugger;
+   this.ajax({
+    method: 'PATCH',
+    url: this.ttt + '/activities/' + id, // id is the activity id
+    headers: {
+      Authorization: 'Token token=' + token
+    },
+    contentType: 'application/json; charset=utf-8',
+    data: JSON.stringify(data),
+    dataType: 'json'
+  }, callback);
+},
 
   addActivity: function (formdata, token, callback) {
     console.log(formdata);
@@ -200,32 +200,49 @@ $(document).ready(function() {
       $('#result').val('status: ' + error.status + ', error: ' +error.error);
       return;
     }
-    debugger;
 
     // dataReturned = $.val(JSON.stringify(data, null, 4))
     $('#result').val(JSON.stringify(data, null, 4));
     dataReturned = data;
-    console.log(data);
-    console.log(dataReturned);
-    // tttapi.showActivitesResult(dataReturned);
     };
 
 
     var propertyList = Handlebars.compile($('#properties-list').html());
 
     var tableCB = function callback(error, data) {
-    if (error) {
-      console.error(error);
-      $('#result').val('status: ' + error.status + ', error: ' +error.error);
-      return;
-    }
-    $('#result').val(JSON.stringify(data, null, 4));
-    var newHTML = propertyList({properties: data.properties});
-    $('#allProperties').html(newHTML);
-  };
+      if (error) {
+        console.error(error);
+        $('#result').val('status: ' + error.status + ', error: ' +error.error);
+        return;
+      }
+      $('#result').val(JSON.stringify(data, null, 4));
+      var newHTML = propertyList({properties: data.properties});
+      $('#allProperties').html(newHTML);
+    };
 
+    /////////
+    var formCB = function callback(error, data) {
+      debugger;
+      if (error) {
+        console.error(error);
+        $('#result').val('status: ' + error.status + ', error: ' +error.error);
+        return;
+      }
+      $('#result').val(JSON.stringify(data, null, 4));
+      // $('form').loadJSON(data);
+      // var newHTML = propertyList({properties: data.properties});
+      // $('#allProperties').html(newHTML);
 
-
+      $.each(data, function(i, item) {
+        ($('#'+i).val(item));
+      });
+      //           // oooooorrrrrrrr //
+      console.log(data);
+      // $.each(data, function(i, item) {
+      //   $("#"+item.field).val(item.value);
+      // });
+    };
+    /////////
 
 
     // If user has not registered this register checkbox will be clicked
@@ -262,6 +279,19 @@ $(document).ready(function() {
     tttapi.listActivities(token, callback);
     });
 
+    $('.getact').on('click', function(e) {
+      debugger;
+      console.log('got to list one activity function', token);
+      // var id = $(".listOneActivity input[id=act-id]").val();
+      var id = 5;
+      e.preventDefault();
+      tttapi.listOneActivity(id, token, formCB);
+    });
+
+
+
+
+
     $('.listOneActivity').on('submit', function(e) {
     console.log('got to list one activity function', token);
     var id = $(".listOneActivity input[id=act-id]").val();
@@ -269,48 +299,57 @@ $(document).ready(function() {
     tttapi.listOneActivity(id, token, callback);
     });
 
-    // $('.updateActivity').on('submit', function(e) {
-    //   var token = $(this).children('[name="token"]').val();
-    //   var id = $('#mark-id').val();
-    //   var data = wrap('game', wrap('cell', form2object(this)));
-    //   e.preventDefault();
-    //   tttapi.markCell(id, data, token, callback);
-    // });
+    $('#updateActivity').on('submit', function(e) {
+      // var token = $(this).children('[name="token"]').val();
+      debugger;
+      var dataForServer = {
+        activity : {
+          provider: $('#act-value').val()
+
+        }
+      };
+
+      var actId = $('#activity-id').val(); //captuers activity
+      dataForServer.activity.key = $('#act-field').val();
+      dataForServer[dataForServer.activity.key] = $('#act-value').val();
+
+      e.preventDefault();
+      tttapi.updateActivity(actId, dataForServer, token, callback);
+    });
 
     $('.addActivity').on('submit', function(e) {
-    debugger;
 
     var dataForServer = {
       activity : {
-        "actname":"",
-        "provider":"",
-        "prono":"",
-        "prostreet":"",
-        "procity":"",
-        "prostate":"",
-        "zip":"",
-        "dov":"",
-        "tov":"",
-        "actlength":0,
-        "participant":"",
+        "name":$('#name').val(),
+        "provider":$("provider").val(),
+        "prono":$("prono").val(),
+        "prostreet":$("prostreet").val(),
+        "procity":$("procity").val(),
+        "prostate":$("prostate").val(),
+        "zip":$("zip").val(),
+        "dov":$("dov").val(),
+        "tov":$("tov").val(),
+        "length":$("length").val(),
+        "participant":$("participant").val(),
         "user_id":userId
    }
     };
 
-    dataForServer.activity.actname = $(".addActivity input[id=actname]").val();
-    dataForServer.activity.provider = $(".addActivity input[id=serviceprovider]").val();
+    dataForServer.activity["name"] = $(".addActivity input[id=name]").val();
+    dataForServer.activity.provider = $(".addActivity input[id=provider]").val();
 
-    dataForServer.activity.prono = $(".addActivity input[id=astreetNo]").val();
-    dataForServer.activity.prostreet = $(".addActivity input[id=astreet]").val();
-    dataForServer.activity.procity = $(".addActivity input[id=acity]").val();
-    dataForServer.activity.prostate = $(".addActivity input[id=astate]").val();
-    dataForServer.activity.zip = $(".addActivity input[id=azipcode]").val();
-    dataForServer.activity.dov = $(".addActivity input[id=dateofactivity]").val();
-    dataForServer.activity.tov = $(".addActivity input[id=timeofactivity]").val();
-    dataForServer.activity.actlength = $(".addActivity input[id=length]").val();
-    dataForServer.activity.participant = $(".addActivity input[id=participants]").val();
+    dataForServer.activity.prono = $(".addActivity input[id=proNo]").val();
+    dataForServer.activity.prostreet = $(".addActivity input[id=prostreet]").val();
+    dataForServer.activity.procity = $(".addActivity input[id=procity]").val();
+    dataForServer.activity.prostate = $(".addActivity input[id=prostate]").val();
+    dataForServer.activity.zip = $(".addActivity input[id=azip]").val();
+    dataForServer.activity.dov = $(".addActivity input[id=dov]").val();
+    dataForServer.activity.tov = $(".addActivity input[id=tov]").val();
+    dataForServer.activity["length"] = $(".addActivity input[id=length]").val();
+    dataForServer.activity.participant = $(".addActivity input[id=participant]").val();
     dataForServer.activity.user_id = userId;
-
+    debugger;
     console.log('got to add activity function', dataForServer);
     e.preventDefault();
     tttapi.addActivity(dataForServer, token, callback);
@@ -331,7 +370,7 @@ $(document).ready(function() {
     console.log('got to list one property function', token);
     var id = $(".listOneProperty input[id=prop-id]").val();
     e.preventDefault();
-    tttapi.listOneProperty(id, token, callback);
+    tttapi.listOneProperty(id, token, tableCB);
   });
 
   $('.addProperty').on('submit', function(e) {
@@ -362,29 +401,6 @@ $(document).ready(function() {
     tttapi.addProperty(dataForServer, token, callback);
   });
 
-
-  var createGameCB = function createGameCB(err, data) {
-    console.log(data);
-    if (err) {
-      console.error(err);
-      return;
-    } else {
-      gameId = data.game.id;
-    }
-  };
-
-  $('#create-game').on('submit', function(e) {
-    //var token = $(this).children('[name="token"]').val();
-    e.preventDefault();
-    tttapi.createGame(token, createGameCB);
-  });
-
-  $('#show-game').on('submit', function(e) {
-    var token = $(this).children('[name="token"]').val();
-    var id = $('#show-id').val();
-    e.preventDefault();
-    tttapi.showGame(id, token, callback);
-  });
 });
 
 });
