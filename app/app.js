@@ -74,16 +74,6 @@ listActivities: function (token, callback) {
     }, callback);
   },
 
-// showActivitesResult: function( resultData ) {
-//   console.log('got to activity result processing', resultData);
-//   if (listFlag = "activity") {
-//     //resultData.forEach(function(entry) {
-//     console.log(entry);
-//     // $.each(resultData, function(i, item) {
-//     // $('<tr>').html(
-//     //     "<td>" + resultData[i].rank + "</td><td>" + resultData[i].content + "</td><td>" + resultData[i].UID + "</td>").appendTo('.activtyTable');
-//   };
-// },
 
 listOneActivity: function (id, token, callback) {
     this.ajax({
@@ -381,28 +371,38 @@ $(document).ready(function() {
     tttapi.listOneProperty(id, token, tableCB);
   });
 
+  $('.getprop').on('click', function(e) {
+      debugger;
+      console.log('got to list one property function', token);
+      // var id = $(".listOneActivity input[id=act-id]").val();
+      var id = $(".addProperty input[id=propid]").val();
+      // var id = 5;
+      e.preventDefault();
+      tttapi.listOneProperty(id, token, formCB);
+    });
+
   $('.addProperty').on('submit', function(e) {
     var dataForServer = {
       property : {
-        "no":"",
-        "street":"",
-        "city":"",
-        "state":"",
-        "zip":"",
-        "house_mgmt_co":"",
-        "manager":"",
+        "no":$('#no').val(),
+        "street":$('#street').val(),
+        "city":$('#city').val(),
+        "state":$('#state').val(),
+        "zip":$('#zip').val(),
+        "house_mgmt_co":$('#house_mgmt_co').val(),
+        "manager":$('#manager').val(),
         "user_id":0
       }
     };
 
-    dataForServer.property.no = $(".addProperty input[id=streetNo]").val();
-    dataForServer.property.street = $(".addProperty input[id=street]").val();
-    dataForServer.property.city = $(".addProperty input[id=city]").val();
-    dataForServer.property.state = $(".addProperty input[id=state]").val();
-    dataForServer.property.zip = $(".addProperty input[id=zipcode]").val();
-    dataForServer.property.house_mgmt_co = $(".addProperty input[id=propertyMgmtCo]").val();
-    dataForServer.property.manager = $(".addProperty input[id=manager]").val();
-    dataForServer.property.user_id = userId;
+    // dataForServer.property.no = $(".addProperty input[id=streetNo]").val();
+    // dataForServer.property.street = $(".addProperty input[id=street]").val();
+    // dataForServer.property.city = $(".addProperty input[id=city]").val();
+    // dataForServer.property.state = $(".addProperty input[id=state]").val();
+    // dataForServer.property.zip = $(".addProperty input[id=zipcode]").val();
+    // dataForServer.property.house_mgmt_co = $(".addProperty input[id=propertyMgmtCo]").val();
+    // dataForServer.property.manager = $(".addProperty input[id=manager]").val();
+    // dataForServer.property.user_id = userId;
 
     console.log('got to add property function', dataForServer);
     e.preventDefault();
