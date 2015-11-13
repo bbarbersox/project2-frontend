@@ -63,7 +63,7 @@ ajax: function(config, cb) {
     $('.listActivities').css("display", "block");
   },
 
-listActivities: function (token, callback) {
+  listActivities: function (token, callback) {
     this.ajax({
       method: 'GET',
       url: this.ttt + '/activities',
@@ -75,7 +75,7 @@ listActivities: function (token, callback) {
   },
 
 
-listOneActivity: function (id, token, callback) {
+  listOneActivity: function (id, token, callback) {
     this.ajax({
       method: 'GET',
       url: this.ttt + '/activities/'+id,
@@ -86,8 +86,7 @@ listOneActivity: function (id, token, callback) {
     }, callback);
   },
 
-updateActivity: function (id, data, token, callback) {
-   debugger;
+  updateActivity: function (id, data, token, callback) {
    this.ajax({
     method: 'PATCH',
     url: this.ttt + '/activities/' + id, // id is the activity id
@@ -98,7 +97,7 @@ updateActivity: function (id, data, token, callback) {
     data: JSON.stringify(data),
     dataType: 'json'
   }, callback);
-},
+  },
 
   addActivity: function (formdata, token, callback) {
     console.log(formdata);
@@ -148,7 +147,6 @@ updateActivity: function (id, data, token, callback) {
   },
 
   updateProperty: function (id, data, token, callback) {
-   debugger;
    this.ajax({
     method: 'PATCH',
     url: this.ttt + '/properties/' + id, // id is the activity id
@@ -162,7 +160,6 @@ updateActivity: function (id, data, token, callback) {
 },
 
   addProperty: function (formdata, token, callback) {
-    debugger;
     console.log('got to add property function');
     console.log(formdata);
     this.ajax({
@@ -226,7 +223,6 @@ $(document).ready(function() {
 
     /////////
     var formCB = function callback(error, data) {
-      debugger;
       if (error) {
         console.error(error);
         $('#result').val('status: ' + error.status + ', error: ' +error.error);
@@ -240,11 +236,6 @@ $(document).ready(function() {
       $.each(data, function(i, item) {
         ($('#'+i).val(item));
       });
-      //           // oooooorrrrrrrr //
-      console.log(data);
-      // $.each(data, function(i, item) {
-      //   $("#"+item.field).val(item.value);
-      // });
     };
     /////////
 
@@ -284,7 +275,6 @@ $(document).ready(function() {
     });
 
     $('.getact').on('click', function(e) {
-      debugger;
       console.log('got to list one activity function', token);
       // var id = $(".listOneActivity input[id=act-id]").val();
       var id = $(".addActivity input[id=actid]").val();
@@ -302,9 +292,8 @@ $(document).ready(function() {
     // tttapi.listOneActivity(id, token, callback);
     // });
 
-    $('.updateact').on('click', function(e) {
-      // var token = $(this).children('[name="token"]').val();
-      debugger;
+  $('.updateact').on('click', function(e) {
+
       var dataForServer = {
         activity : {
           name: $('#name').val(),
@@ -327,26 +316,25 @@ $(document).ready(function() {
 
       e.preventDefault();
       tttapi.updateActivity(actId, dataForServer, token, callback);
-    });
+  });
 
-    $('.addActivity').on('submit', function(e) {
-
-    var dataForServer = {
-      activity : {
-        "name":$('#name').val(),
-        "provider":$("provider").val(),
-        "prono":$("prono").val(),
-        "prostreet":$("prostreet").val(),
-        "procity":$("procity").val(),
-        "prostate":$("prostate").val(),
-        "zip":$("zip").val(),
-        "dov":$("dov").val(),
-        "tov":$("tov").val(),
-        "length":$("length").val(),
-        "participant":$("participant").val(),
-        "user_id":userId
-   }
-    };
+  $('.addActivity').on('submit', function(e) {
+  var dataForServer = {
+    activity : {
+      "name":$('#name').val(),
+      "provider":$("provider").val(),
+      "prono":$("prono").val(),
+      "prostreet":$("prostreet").val(),
+      "procity":$("procity").val(),
+      "prostate":$("prostate").val(),
+      "zip":$("zip").val(),
+      "dov":$("dov").val(),
+      "tov":$("tov").val(),
+      "length":$("length").val(),
+      "participant":$("participant").val(),
+      "user_id":userId
+    }
+  };
 
     dataForServer.activity["name"] = $(".addActivity input[id=name]").val();
     dataForServer.activity.provider = $(".addActivity input[id=provider]").val();
@@ -361,28 +349,20 @@ $(document).ready(function() {
     dataForServer.activity["length"] = $(".addActivity input[id=length]").val();
     dataForServer.activity.participant = $(".addActivity input[id=participant]").val();
     dataForServer.activity.user_id = userId;
-    debugger;
-    console.log('got to add activity function', dataForServer);
-    e.preventDefault();
-    tttapi.addActivity(dataForServer, token, callback);
+
+  e.preventDefault();
+  tttapi.addActivity(dataForServer, token, callback);
   });
 
-    $('deleteActivity').on('Submit', function(e){
-      console.log('got to delete Acivity');
+  $('.deleteact').on('Submit', function(e){
+    console.log('got to delete Acivity');
 
-    });
+  });
 
   $('.listProperties').on('submit', function(e) {
     console.log('got to list properties function', token);
     e.preventDefault();
     tttapi.listProperties(token, tableCB);
-  });
-
-  $('.listOneProperty').on('submit', function(e) {
-    console.log('got to list one property function', token);
-    var id = $(".listOneProperty input[id=prop-id]").val();
-    e.preventDefault();
-    tttapi.listOneProperty(id, token, tableCB);
   });
 
   $('.getprop').on('click', function(e) {
@@ -409,28 +389,7 @@ $(document).ready(function() {
       }
     };
 
-    $('.updateprop').on('click', function(e) {
-      // var token = $(this).children('[name="token"]').val();
-      debugger;
-      var dataForServer = {
-        property : {
-          no: $('#name').val(),
-          street: $('#provider').val(),
-          city: $('#prono').val(),
-          state: $('#prostreet').val(),
-          zip: $('#procity').val(),
-          house_mgmt_co: $('#prostate').val(),
-          ['zip']: $('#zip').val()
-        }
-      };
 
-      var propId = $('#propid').val(); //captuers activity
-      // dataForServer.activity.key = $('#act-field').val();
-      // dataForServer[dataForServer.activity.key] = $('#act-value').val();
-
-      e.preventDefault();
-      tttapi.updateProperty(propId, dataForServer, token, callback);
-    });
 
     // dataForServer.property.no = $(".addProperty input[id=streetNo]").val();
     // dataForServer.property.street = $(".addProperty input[id=street]").val();
@@ -444,6 +403,26 @@ $(document).ready(function() {
     console.log('got to add property function', dataForServer);
     e.preventDefault();
     tttapi.addProperty(dataForServer, token, callback);
+  });
+
+  $('.updateprop').on('click', function(e) {
+    // var token = $(this).children('[name="token"]').val();
+    var dataForServer = {
+      property : {
+        no: $('#name').val(),
+        street: $('#provider').val(),
+        city: $('#prono').val(),
+        state: $('#prostreet').val(),
+        zip: $('#procity').val(),
+        house_mgmt_co: $('#prostate').val(),
+        ['zip']: $('#zip').val()
+      }
+    };
+
+    var propId = $('#propid').val(); //captuers activity
+
+    e.preventDefault();
+    tttapi.updateProperty(propId, dataForServer, token, callback);
   });
 
 });
