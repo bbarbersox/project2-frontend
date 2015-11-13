@@ -283,35 +283,43 @@ $(document).ready(function() {
       debugger;
       console.log('got to list one activity function', token);
       // var id = $(".listOneActivity input[id=act-id]").val();
-      var id = 5;
+      var id = $(".addActivity input[id=actid]").val();
+      // var id = 5;
       e.preventDefault();
       tttapi.listOneActivity(id, token, formCB);
     });
 
 
+    // replaced by getact to get a single activity
+    // $('.listOneActivity').on('submit', function(e) {
+    // console.log('got to list one activity function', token);
+    // var id = $(".listOneActivity input[id=act-id]").val();
+    // e.preventDefault();
+    // tttapi.listOneActivity(id, token, callback);
+    // });
 
-
-
-    $('.listOneActivity').on('submit', function(e) {
-    console.log('got to list one activity function', token);
-    var id = $(".listOneActivity input[id=act-id]").val();
-    e.preventDefault();
-    tttapi.listOneActivity(id, token, callback);
-    });
-
-    $('#updateActivity').on('submit', function(e) {
+    $('.updateact').on('click', function(e) {
       // var token = $(this).children('[name="token"]').val();
       debugger;
       var dataForServer = {
         activity : {
-          provider: $('#act-value').val()
-
+          name: $('#name').val(),
+          provider: $('#provider').val(),
+          prono: $('#prono').val(),
+          prostreet: $('#prostreet').val(),
+          procity: $('#procity').val(),
+          prostate: $('#prostate').val(),
+          zip: $('#zip').val(),
+          dov: $('#dov').val(),
+          tov: $('#tov').val(),
+          tov: $('#length').val(),
+          tov: $('#participant').val()
         }
       };
 
-      var actId = $('#activity-id').val(); //captuers activity
-      dataForServer.activity.key = $('#act-field').val();
-      dataForServer[dataForServer.activity.key] = $('#act-value').val();
+      var actId = $('#actid').val(); //captuers activity
+      // dataForServer.activity.key = $('#act-field').val();
+      // dataForServer[dataForServer.activity.key] = $('#act-value').val();
 
       e.preventDefault();
       tttapi.updateActivity(actId, dataForServer, token, callback);
