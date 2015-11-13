@@ -147,6 +147,20 @@ updateActivity: function (id, data, token, callback) {
     }, callback);
   },
 
+  updateProperty: function (id, data, token, callback) {
+   debugger;
+   this.ajax({
+    method: 'PATCH',
+    url: this.ttt + '/properties/' + id, // id is the activity id
+    headers: {
+      Authorization: 'Token token=' + token
+    },
+    contentType: 'application/json; charset=utf-8',
+    data: JSON.stringify(data),
+    dataType: 'json'
+  }, callback);
+},
+
   addProperty: function (formdata, token, callback) {
     debugger;
     console.log('got to add property function');
@@ -302,8 +316,8 @@ $(document).ready(function() {
           zip: $('#zip').val(),
           dov: $('#dov').val(),
           tov: $('#tov').val(),
-          tov: $('#length').val(),
-          tov: $('#participant').val()
+          length: $('#length').val(),
+          participant: $('#participant').val()
         }
       };
 
@@ -394,6 +408,29 @@ $(document).ready(function() {
         "user_id":0
       }
     };
+
+    $('.updateprop').on('click', function(e) {
+      // var token = $(this).children('[name="token"]').val();
+      debugger;
+      var dataForServer = {
+        property : {
+          no: $('#name').val(),
+          street: $('#provider').val(),
+          city: $('#prono').val(),
+          state: $('#prostreet').val(),
+          zip: $('#procity').val(),
+          house_mgmt_co: $('#prostate').val(),
+          ['zip']: $('#zip').val()
+        }
+      };
+
+      var propId = $('#propid').val(); //captuers activity
+      // dataForServer.activity.key = $('#act-field').val();
+      // dataForServer[dataForServer.activity.key] = $('#act-value').val();
+
+      e.preventDefault();
+      tttapi.updateProperty(propId, dataForServer, token, callback);
+    });
 
     // dataForServer.property.no = $(".addProperty input[id=streetNo]").val();
     // dataForServer.property.street = $(".addProperty input[id=street]").val();
